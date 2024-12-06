@@ -1,0 +1,66 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+android {
+    namespace "com.example.webrtc_application_2"
+    compileSdkVersion 34 // 最新のSDKバージョンを指定（適宜更新）
+    ndkVersion "23.1.7779620" // 使用するNDKバージョンを明示的に指定
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        // あなたのアプリケーションIDを設定
+        applicationId "com.example.webrtc_application_2"
+        minSdkVersion 23 // 最低SDKバージョンを設定
+        targetSdkVersion 33 // 最新のターゲットSDKバージョンを設定
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source '../..' // Flutterプロジェクトのルートパスを設定
+}
+
+dependencies {
+    
+    // 必要な依存関係をここに追加（例えば、WebRTCパッケージなど）
+}
